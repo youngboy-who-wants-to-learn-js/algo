@@ -304,3 +304,38 @@ var isBalanced = function (root) {
 
   return isBalanced(root.left) && isBalanced(root.right);
 };
+
+//! 112. Path Sum
+var hasPathSum = function (root, targetSum) {
+  if (!root) {
+    return false;
+  }
+
+  if (root.left === null && root.right === null && targetSum === root.val) {
+    return true;
+  }
+
+  return (
+    hasPathSum(root.left, targetSum - node.val) ||
+    hasPathSum(root.right, targetSum) - node.val
+  );
+  /* 
+    var hasPathSum = function(root, sum) {
+      return dfs(root, 0, sum);
+  };
+
+  var dfs = function(curr, currentSum, targetSum) {
+      if (!curr) {
+          return false;
+      }
+
+      currentSum += curr.val;
+      
+      if (curr.left === null && curr.right === null) {
+          return currentSum === targetSum;
+      }
+      
+      return dfs(curr.left, currentSum, targetSum) || dfs(curr.right, currentSum, targetSum);
+  }
+  */
+};
