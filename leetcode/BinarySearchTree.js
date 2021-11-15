@@ -339,3 +339,65 @@ var hasPathSum = function (root, targetSum) {
   }
   */
 };
+
+//! 98. Validate Binary Search Tree
+/*
+var isValidBST = function (root) {
+  let values = [];
+  const dfs = (node) => {
+    if (node) {
+      dfs(node.left);
+      values.push(node.val);
+      dfs(node.right);
+    }
+  };
+
+  dfs(root);
+  for (let i = 1; i < values.length; i++) {
+    if (values[i] < values[i - 1] || values[i] === values[i - 1]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+*/
+var isValidBST = function (root) {
+  const valid = (node, left, right) => {
+    if (!node) {
+      return true;
+    }
+    console.log("node:", node, "left:", left, "right:", right);
+    if (!(node.val < right && node.val > left)) return false;
+
+    return (
+      valid(node.left, left, node.val) && valid(node.right, node.val, right)
+    );
+  };
+
+  return valid(root, -Infinity, +Infinity);
+};
+
+//! 226. Invert Binary Tree
+var invertTree = function (root) {
+  if (!root) return root;
+  const newRoot = new TreeNode(root.val);
+  const header = newRoot;
+  const helper = (node, root) => {
+    if (node) {
+      if (node.left) {
+        root.right = new TreeNode(node.left.val);
+      }
+
+      if (node.right) {
+        root.left = new TreeNode(node.right.val);
+      }
+
+      helper(node.left, root.right);
+      helper(node.right, root.left);
+    }
+  };
+
+  helper(root, newRoot);
+  return header;
+};
