@@ -2159,3 +2159,30 @@ var isPerfectSquare = function (num) {
   return false;
 };
 
+//! 350. Intersection of Two Arrays II
+var intersect = function (nums1, nums2) {
+  const result = [];
+  const map = {};
+  let copyMap = {};
+
+  for (let i = 0; i < nums1.length; i++) {
+    const elem = nums1[i];
+    if (map[elem] !== undefined) {
+      map[elem]++;
+    } else {
+      map[elem] = 1;
+    }
+  }
+
+  for (let j = 0; j < nums2.length; j++) {
+    const elem = nums2[j];
+    if (map[elem]) {
+      map[elem]--;
+      if (map[elem] >= 0) {
+        result.push(elem);
+      }
+    }
+  }
+
+  return result;
+};
