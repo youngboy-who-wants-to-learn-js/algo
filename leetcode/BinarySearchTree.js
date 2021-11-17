@@ -401,3 +401,22 @@ var invertTree = function (root) {
   helper(root, newRoot);
   return header;
 };
+
+//! 654. Maximum Binary Tree
+var constructMaximumBinaryTree = function (nums) {
+  const maxElem = Math.max(...nums);
+  const indexMaxElem = nums.indexOf(maxElem);
+  let leftPart = nums.slice(0, indexMaxElem);
+  let rightPart = nums.slice(indexMaxElem + 1);
+
+  const root = new TreeNode(maxElem);
+  if (leftPart.length) {
+    root.left = constructMaximumBinaryTree(leftPart);
+  }
+
+  if (rightPart.length) {
+    root.right = constructMaximumBinaryTree(rightPart);
+  }
+
+  return root;
+};

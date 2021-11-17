@@ -2186,3 +2186,22 @@ var intersect = function (nums1, nums2) {
 
   return result;
 };
+//! 287. Find the Duplicate Number
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findDuplicate = function (nums) {
+  const map = {};
+  for (let i = 0; i < nums.length; i++) {
+    if (map[[nums[i]]]) {
+      return nums[i];
+    } else {
+      map[nums[i]] = true;
+    }
+  }
+
+  // TODO check solution fast and slow pointer
+};
+
+console.log(findDuplicate([3, 1, 3, 4, 2]));
