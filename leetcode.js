@@ -2200,8 +2200,46 @@ var findDuplicate = function (nums) {
       map[nums[i]] = true;
     }
   }
-
-  // TODO check solution fast and slow pointer
 };
 
-console.log(findDuplicate([3, 1, 3, 4, 2]));
+//! 4. Median of Two Sorted Arrays
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number}
+ */
+var findMedianSortedArrays = function (nums1, nums2) {
+  const m = nums1.length;
+  const n = nums2.length;
+  const mid = Math.floor((m + n) / 2);
+  const mergedArray = [];
+  let i = 0;
+  let j = 0;
+  while (nums1[i] !== undefined && nums2[j] !== undefined) {
+    if (nums1[i] < nums2[j]) {
+      mergedArray.push(nums1[i]);
+      i++;
+    } else {
+      mergedArray.push(nums2[j]);
+      j++;
+    }
+  }
+
+  while (nums1[i] !== undefined) {
+    mergedArray.push(nums1[i]);
+    i++;
+  }
+
+  while (nums2[j] !== undefined) {
+    mergedArray.push(nums2[j]);
+    j++;
+  }
+
+  if ((m + n) % 2) {
+    return mergedArray[mid];
+  } else {
+    return (mergedArray[mid] + mergedArray[mid - 1]) / 2;
+  }
+};
+
+console.log(findMedianSortedArrays([0, 0], [0, 0]));
