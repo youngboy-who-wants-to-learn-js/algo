@@ -2242,4 +2242,36 @@ var findMedianSortedArrays = function (nums1, nums2) {
   }
 };
 
-console.log(findMedianSortedArrays([0, 0], [0, 0]));
+//! 645. Set Mismatch
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findErrorNums = function (nums) {
+  const map = {};
+  const maxElem = Math.max(...nums);
+  let repeated, missed;
+  for (let i = 0; i < nums.length; i++) {
+    const elem = nums[i];
+    if (map[elem]) {
+      map[elem]++;
+    } else {
+      map[elem] = 1;
+    }
+  }
+
+  for (let i = 1; i <= maxElem; i++) {
+    if (map[i] === 2) {
+      repeated = i;
+    }
+
+    if (!map[i]) {
+      missed = i;
+    }
+  }
+
+  if (!missed) {
+    missed = maxElem + 1;
+  }
+  return [repeated, missed];
+};
