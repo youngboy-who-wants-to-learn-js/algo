@@ -421,21 +421,7 @@ var constructMaximumBinaryTree = function (nums) {
   return root;
 };
 
-//! 450. Delete Node in a BST - DONT WORK!!!!!!
-
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {TreeNode} root
- * @param {number} key
- * @return {TreeNode}
- */
+//! 450. Delete Node in a BST
 
 function minNode(node) {
   if (node.left === null) {
@@ -448,11 +434,12 @@ function minNode(node) {
 function removeNode(node, data) {
   if (node === null) {
     return null;
-  } else if (data < node.data) {
+  } else if (data < node.val) {
     node.left = removeNode(node.left, data);
     return node;
-  } else if (data > node.data) {
+  } else if (data > node.val) {
     node.right = removeNode(node.right, data);
+    return node;
   } else {
     if (node.left === null && node.right === null) {
       node = null;
@@ -465,16 +452,13 @@ function removeNode(node, data) {
       node = node.left;
       return node;
     }
-
     let newNode = minNode(node.right);
-    node.data = newNode.data;
-    node.right = removeNode(node.right, newNode.data);
+    node.val = newNode.val;
+    node.right = removeNode(node.right, newNode.val);
     return node;
   }
 }
 
 var deleteNode = function (root, key) {
-  const newRoot = removeNode(root, key);
-  console.log("newRoot:", newRoot);
-  return newRoot;
+  return removeNode(root, key);
 };
