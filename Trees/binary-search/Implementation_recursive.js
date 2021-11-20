@@ -74,9 +74,10 @@ class BinarySearchTree {
 
   minNode(node) {
     if (node.left === null) {
+      console.log("node in minNode:", node);
       return node;
     } else {
-      this.minNode(node.left);
+      return this.minNode(node.left);
     }
   }
 
@@ -94,6 +95,7 @@ class BinarySearchTree {
       // если данные, которые нужно удалить, больше, чем данные корня, переходим к правому поддереву
     } else if (data > node.data) {
       node.right = this.removeNode(node.right, data);
+      return node;
       // если данные такие как данные корня, удаляем узел
     } else {
       // удаляем узел без потомков (листовой узел (leaf) или крайний)
@@ -112,24 +114,25 @@ class BinarySearchTree {
       // удаляем узел с двумя потомками
       // minNode правого поддерева хранится в новом узле
       let newNode = this.minNode(node.right);
+      console.log("newNOde:", newNode);
       node.data = newNode.data;
       node.right = this.removeNode(node.right, newNode.data);
       return node;
     }
   }
 }
-
+// [50, 30, 70, null, 40, 60, 80];
+// 50;
 const bst = new BinarySearchTree();
+bst.insert(50);
+bst.insert(30);
+bst.insert(70);
+bst.insert(40);
+bst.insert(60);
+bst.insert(80);
+bst.remove(50);
+console.log(bst);
 
-bst.insert(5);
-bst.insert(3);
-bst.insert(6);
-bst.insert(2);
-bst.insert(4);
-bst.insert(7);
-// console.log(bst.root.left);
-bst.remove(3);
-
-bst.inOrderTraverse(bst.root, (data) => {
-  console.log("Data;", data);
-});
+// bst.inOrderTraverse(bst.root, (data) => {
+//   console.log("Data;", data);
+// });
