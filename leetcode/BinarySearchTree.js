@@ -1,3 +1,9 @@
+function TreeNode(val, left, right) {
+  this.val = val === undefined ? 0 : val;
+  this.left = left === undefined ? null : left;
+  this.right = right === undefined ? null : right;
+}
+
 //! 108. Convert Sorted Array to Binary Search Tree
 /**
  * Definition for a binary tree node.
@@ -543,4 +549,78 @@ var kthSmallest = function (root, k) {
 
   inOrder(root);
   return res[k - 1];
+};
+//! 106. Construct Binary Tree from Inorder and Postorder Traversal
+
+// [9, 3, 15, 20, 7], [9, 15, 7, 20, 3]
+// [4, 10, 12, 15, 18, 22, 24, 25, 31, 35, 44, 50, 66, 70, 90], [4, 12, 10, 18, 24, 22, 15, 31, 44, 35, 66, 90, 70, 50, 25]
+// [4, 10, 15, 18, 22, 25, 50], [4, 10, 18, 22, 15, 50, 25]
+
+var buildTree = function (inorder, postorder) {
+  /*
+  const separatorValue = postorder.pop();
+  const root = new TreeNode(separatorValue);
+
+  const separatorInorderIndex = inorder.indexOf(separatorValue);
+  const leftInorder = inorder.slice(0, separatorInorderIndex);
+  const rightInorder = inorder.slice(separatorInorderIndex + 1);
+
+  let leftPostOrder = [];
+  let rightPostOrder = [];
+
+  for (let i = 0; i < postorder.length; i++) {
+    const elem = postorder[i];
+    if (leftInorder.includes(elem)) {
+      leftPostOrder.push(elem);
+    } else {
+      rightPostOrder.push(elem);
+    }
+  }
+
+  if (leftInorder.length || leftInorder.length) {
+    root.left = buildTree(leftInorder, leftPostOrder);
+  }
+
+  if (rightInorder.length || rightPostOrder.length) {
+    root.right = buildTree(rightInorder, rightPostOrder);
+  }
+
+  return root;
+  */
+
+  function buildTreeRec(inorder, i1, i2, postorder, p1, p2) {
+    if (i1 >= i2 || p1 >= p2) {
+      return null;
+    }
+
+    const root = new TreeNode(postorder[p2 - 1]);
+    let it = 0;
+    for (let i = i1; i < i2; i++) {
+      if (postorder[p2 - 1] === inorder[i]) {
+        it = i;
+      }
+    }
+
+    let diff = it - i1;
+
+    root.left = buildTreeRec(inorder, i1, i1 + diff, postorder, p1, p1 + diff);
+    root.right = buildTreeRec(
+      inorder,
+      i1 + diff + 1,
+      i2,
+      postorder,
+      p1 + diff,
+      p2 - 1
+    );
+
+    return root;
+  }
+
+  let n = inorder.length;
+
+  if (n === 0) {
+    return;
+  }
+
+  return buildTreeRec(inorder, 0, n, postorder, 0, n);
 };
