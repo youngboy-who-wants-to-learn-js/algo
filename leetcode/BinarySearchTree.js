@@ -462,3 +462,85 @@ function removeNode(node, data) {
 var deleteNode = function (root, key) {
   return removeNode(root, key);
 };
+
+//! 449. Serialize and Deserialize BST
+
+var serialize = function (root) {
+  let res = "";
+  const preOrder = (node) => {
+    if (node) {
+      res += node.val + ",";
+
+      preOrder(node.left);
+      preOrder(node.right);
+    }
+  };
+  preOrder(root);
+  console.log("res::", res);
+  return res;
+};
+
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} data
+ * @return {TreeNode}
+ */
+
+function TreeNode(val) {
+  this.val = val;
+  this.left = this.right = null;
+}
+
+var deserialize = function (data) {
+  if (data.length === 0) {
+    return null;
+  }
+  const splitData = data.split(",");
+  console.log("split", splitData);
+  const root = new TreeNode(splitData[0]);
+
+  const _insertNode = (node, newNode) => {
+    if (newNode.val < node.val) {
+      if (node.left === null) {
+        node.left = newNode;
+      } else {
+        _insertNode(node.left, newNode);
+      }
+    } else {
+      if (node.right === null) {
+        node.right = newNode;
+      } else {
+        _insertNode(node.right, newNode);
+      }
+    }
+  };
+
+  const insert = (data) => {
+    let newNode = new TreeNode(data);
+
+    _insertNode(root, newNode);
+  };
+
+  for (let i = 1; i < splitData.length; i++) {
+    console.log("insert:", splitData[i]);
+    insert(Number(splitData[i]));
+  }
+
+  return root;
+};
+
+//! 230. Kth Smallest Element in a BST
+var kthSmallest = function (root, k) {
+  let res = [];
+  const inOrder = (node) => {
+    if (node) {
+      inOrder(node.left);
+      res.push(node.val);
+      inOrder(node.right);
+    }
+  };
+
+  inOrder(root);
+  return res[k - 1];
+};
