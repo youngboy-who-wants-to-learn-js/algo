@@ -624,3 +624,69 @@ var buildTree = function (inorder, postorder) {
 
   return buildTreeRec(inorder, 0, n, postorder, 0, n);
 };
+
+//! 538. Convert BST to Greater Tree
+var convertBST = function (root) {
+  const inOrder = (node, cb) => {
+    if (node) {
+      inOrder(node.left, cb);
+      cb(node);
+      inOrder(node.right, cb);
+    }
+  };
+
+  let allNodesValues = [];
+  inOrder(root, (node) => {
+    allNodesValues.push(node.val);
+  });
+
+  inOrder(root, (node) => {
+    const idx = allNodesValues.indexOf(node.val);
+    const sum = allNodesValues.slice(idx).reduce((a, i) => a + i, 0);
+    node.val = sum;
+  });
+
+  return root;
+
+  /**
+       let curSum = 0;
+    const inOrder = (node) => {
+    if (node) {
+      inOrder(node.right)
+      curSum += node.val
+      console.log("curSum:", curSum);
+      node.val = curSum;
+      inOrder(node.left)
+    }
+  }
+    
+   inOrder(root, curSum)
+
+  
+  return root
+   */
+  // Iteration
+  /*
+  var convertBST = function(root) {
+  if (!root) {
+    return null;
+  }
+  
+  let sum = 0;
+  let stack = [];
+  let node = root;
+  while (stack.length !== 0 || node !== null) {
+    while (node !== null) {
+      stack.push(node);
+      node = node.right; 
+    }
+  
+    node = stack.pop();
+    node.val += sum;
+    sum = node.val;
+    node = node.left;
+  }
+  return root;
+};
+   */
+};
