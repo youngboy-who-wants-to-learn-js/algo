@@ -114,16 +114,9 @@ class BinaryTree {
 }
 
 const myTree = new BinaryTree();
+myTree.add(3);
+myTree.add(9);
 myTree.add(20);
 myTree.add(15);
-myTree.add(25);
-myTree.add(11);
-myTree.add(18);
-myTree.add(21);
-myTree.add(30);
-myTree.add(3);
-myTree.add(12);
-myTree.add(13);
-myTree.add(19);
-myTree.remove(25);
+myTree.add(7);
 console.log(myTree);
