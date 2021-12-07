@@ -625,109 +625,6 @@ var buildTree = function (inorder, postorder) {
   return buildTreeRec(inorder, 0, n, postorder, 0, n);
 };
 
-const mockTree = {
-  data: 3,
-  left: { data: 9, left: null, right: null },
-  right: {
-    data: 20,
-    left: { data: 15, left: null, right: null },
-    right: { data: 7, left: null, right: null },
-  },
-};
-
-class MockNode {
-  constructor(data = 0, left = null, right = null) {
-    this.data = data;
-    this.left = left;
-    this.right = right;
-  }
-}
-
-const mockTree1 = new MockNode(
-  1,
-  new MockNode(2, new MockNode(4), null),
-  new MockNode(3, null, new MockNode(5))
-);
-
-const mockTree2 = new MockNode(
-  1,
-  new MockNode(2, new MockNode(4), new MockNode(14)),
-  new MockNode(3, new MockNode(17), new MockNode(5))
-);
-
-// console.log(bst);
-
-var zigzagLevelOrder = function (root) {
-  /*
-  const queue = [root];
-
-  while (queue.length) {
-    const node = queue.shift();
-
-    console.log("val:", node.data);
-
-    if (node.left) {
-      queue.push(node.left);
-    }
-
-    if (node.right) {
-      queue.push(node.right);
-    }
-  }
-  */
-  const queue = [[root]];
-  const zigzagOrderResult = [];
-  let i = 0;
-
-  while (queue.length) {
-    const level = queue.shift(); // [node, node];
-    const levelResult = [];
-    const newLevel = [];
-
-    while (level.length) {
-      const node = level.shift();
-      levelResult.push(node.data);
-
-      if (i % 2) {
-        console.log("call if:", i);
-        if (node.left) {
-          newLevel.push(node.left);
-        }
-
-        if (node.right) {
-          newLevel.push(node.right);
-        }
-      } else {
-        console.log("call else:", i);
-        if (node.right) {
-          newLevel.push(node.right);
-        }
-
-        if (node.left) {
-          newLevel.push(node.left);
-        }
-      }
-    }
-
-    if (newLevel.length > 0) {
-      queue.push(newLevel);
-    }
-    console.log("levelResult:", levelResult);
-    console.log("newLevel:", newLevel);
-    zigzagOrderResult.push(levelResult);
-
-    console.log("i:", i);
-    i++;
-  }
-
-  return zigzagOrderResult;
-};
-
-// mockTree - [[3],[20,9],[15,7]]
-// mockTree1 - [[1],[3,2],[4,5]]
-// mockTree2 - [[1],[3,2],[4,14,17,5]]
-console.log(zigzagLevelOrder(mockTree2));
-// TODO
 //! 538. Convert BST to Greater Tree
 var convertBST = function (root) {
   const inOrder = (node, cb) => {
@@ -792,4 +689,85 @@ var convertBST = function (root) {
   return root;
 };
    */
+};
+
+var zigzagLevelOrder = function (root) {
+  const queue = [[root]];
+  const zigzagOrderResult = [];
+  let i = 0;
+
+  while (queue.length) {
+    const level = queue.shift(); // [node, node];
+    const levelResult = [];
+    const newLevel = [];
+
+    while (level.length) {
+      const node = level.pop();
+      levelResult.push(node.val);
+      if (i % 2) {
+        if (node.left) {
+          newLevel.push(node.left);
+        }
+
+        if (node.right) {
+          newLevel.push(node.right);
+        }
+      } else {
+        if (node.right) {
+          newLevel.push(node.right);
+        }
+
+        if (node.left) {
+          newLevel.push(node.left);
+        }
+      }
+    }
+
+    if (newLevel.length > 0) {
+      queue.push(newLevel);
+    }
+
+    zigzagOrderResult.push(levelResult.reverse());
+
+    i++;
+  }
+
+  return zigzagOrderResult;
+  /*
+  const result = [];
+  if (!root) {
+    return result;
+  }
+
+  let queue = [];
+  queue.push(root);
+  let j = 0;
+
+  while (queue.length) {
+    let size = queue.length;
+    let currentLevel = [];
+    let reverse = true;
+    for (let i = 0; i < size; i++) {
+      let curNode = queue.shift();
+      currentLevel.push(curNode.val);
+
+      if (curNode.left) {
+        queue.push(curNode.left);
+      }
+
+      if (curNode.right) {
+        queue.push(curNode.right);
+      }
+    }
+
+    if (j % 2 === 1) {
+      result.push(currentLevel.reverse());
+    } else {
+      result.push(currentLevel);
+    }
+    j++;
+  }
+
+  return result;
+  */
 };
