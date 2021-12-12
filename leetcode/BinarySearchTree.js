@@ -771,3 +771,58 @@ var zigzagLevelOrder = function (root) {
   return result;
   */
 };
+
+//! 1382. Balance a Binary Search Tree
+
+var balanceBST = function (root) {
+  const nodesValues = [];
+  const inOrder = (node) => {
+    if (node) {
+      inOrder(node.left);
+      nodesValues.push(node.val);
+      inOrder(node.right);
+    }
+  };
+
+  inOrder(root);
+
+  const middle = Math.floor(nodesValues.length / 2);
+  const newRoot = new TreeNode(nodesValues[middle]);
+  // console.log("middle:", middle);
+
+  const insertNode = (node, insertValue) => {
+    if (node.val > insertValue) {
+      if (node.left === null) {
+        node.left = new TreeNode(insertValue);
+      } else {
+        insertNode(node.left, insertValue);
+      }
+    } else if (node.val < insertValue) {
+      if (node.right === null) {
+        node.right = new TreeNode(insertValue);
+      } else {
+        insertNode(node.right, insertValue);
+      }
+    }
+  };
+
+  const recursion = (array) => {
+    if (array.length === 0) {
+      return;
+    } else {
+      const middle = Math.floor(array.length / 2);
+      insertNode(newRoot, array[middle]);
+      const arr1 = array.slice(0, middle);
+      const arr2 = array.slice(middle + 1);
+      if (arr1.length) {
+        recursion(arr1);
+      }
+
+      if (arr2.length) {
+        recursion(arr2);
+      }
+    }
+  };
+  recursion(nodesValues);
+  return newRoot;
+};
