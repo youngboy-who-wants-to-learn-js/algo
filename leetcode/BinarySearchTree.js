@@ -826,3 +826,14 @@ var balanceBST = function (root) {
   recursion(nodesValues);
   return newRoot;
 };
+
+//! 617. Merge Two Binary Trees
+var mergeTrees = function (root1, root2) {
+  if (!root1 && !root2) {
+    return null;
+  }
+  let newRoot = new TreeNode((root1?.val || 0) + (root2?.val || 0));
+  newRoot.left = mergeTrees(root1?.left, root2?.left);
+  newRoot.right = mergeTrees(root1?.right, root2?.right);
+  return newRoot;
+};
