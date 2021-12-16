@@ -2275,3 +2275,65 @@ var findErrorNums = function (nums) {
   }
   return [repeated, missed];
 };
+
+//! 121. Best Time to Buy and Sell Stock
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function (prices) {
+  /*
+  let cur = null;
+  let profit = 0;
+
+  while (prices.length) {
+    const pricePerDay = prices.shift();
+
+    if (cur === null) {
+      cur = pricePerDay;
+    }
+
+    if (pricePerDay > cur) {
+      profit = pricePerDay - cur > profit ? pricePerDay - cur : profit;
+    } else {
+      cur = pricePerDay;
+    }
+  }
+
+  return profit;
+  */
+
+  let cur = null;
+  let profit = 0;
+
+  for (let i = 0; i < prices.length; i++) {
+    const pricePerDay = prices[i];
+
+    if (cur === null) {
+      cur = pricePerDay;
+    }
+
+    if (pricePerDay > cur) {
+      profit = pricePerDay - cur > profit ? pricePerDay - cur : profit;
+    } else {
+      cur = pricePerDay;
+    }
+  }
+
+  return profit;
+
+  /*
+  let minprice = Number.MAX_VALUE;
+  let maxprofit = 0;
+
+  for (let i = 0; i < prices.length; i++) {
+    if (prices[i] < minprice) {
+      minprice = prices[i];
+    } else if (prices[i] - minprice > maxprofit) {
+      maxprofit = prices[i] - minprice;
+    }
+  }
+
+  return maxprofit;
+  */
+};
