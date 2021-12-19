@@ -2337,3 +2337,58 @@ var maxProfit = function (prices) {
   return maxprofit;
   */
 };
+
+//! 122. Best Time to Buy and Sell Stock II
+
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function (prices) {
+  let profit = 0;
+  let localMin = null;
+  for (let i = 0; i < prices.length; i++) {
+    let prev = prices[i - 1];
+    let cur = prices[i];
+    let next = prices[i + 1];
+
+    if (localMin === null) {
+      if (
+        (cur < next && (prev !== undefined ? cur < prev : true)) ||
+        (cur < next && cur === prev)
+      ) {
+        localMin = prices[i];
+      }
+    } else {
+      let nextElemAfterCur = null;
+      if (cur === next) {
+        prices.slice(i).find((item) => item !== cur);
+      }
+
+      if (
+        ((cur > prev || cur === prev) && (next ? cur > next : true)) ||
+        (cur > prev && cur === next && nextElemAfterCur !== undefined
+          ? nextElemAfterCur < cur
+          : i === prices.length - 1
+          ? cur
+          : false)
+      ) {
+        profit += cur - localMin;
+        localMin = null;
+      }
+    }
+  }
+
+  return profit;
+};
+//TODO check https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/solution/
+// console.log(maxProfit([6, 1, 3, 2, 4, 7]) === 7);
+// console.log(maxProfit([2, 4, 1]) === 2);
+// console.log(maxProfit([7, 1, 5, 3, 6, 4]) === 7);
+// console.log(maxProfit([7, 1, 5, 6, 3, 6, 4]) === 8);
+// console.log(maxProfit([1, 2, 3, 4, 5]) === 4);
+// console.log(maxProfit([7, 6, 4, 3, 1]) === 0);
+// console.log(maxProfit([2, 1, 2, 1, 0, 1, 2]) === 3);
+// console.log(maxProfit([2, 2, 5]) === 3);
+// console.log(maxProfit([2, 5, 5, 6]) === 4);
+// console.log(maxProfit([2, 5, 5]) === 3);
