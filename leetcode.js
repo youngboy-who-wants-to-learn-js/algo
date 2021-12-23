@@ -2413,3 +2413,20 @@ var maxProfit = function (prices) {
   return maxProfit;
   */
 };
+
+//! 767. Reorganize String
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var reorganizeString = function (s) {
+  // создать объект ключ буква значение
+  // каждым шагом находить букву с наибольшим количевством входов -> конкатенировать -> отнимать в объекте значение
+};
+
+console.log(reorganizeString("vvvlo"));
+
+// "vvvlo" = "vlvov"
+// "aab" = "bab"
+// "aaab" = ""
