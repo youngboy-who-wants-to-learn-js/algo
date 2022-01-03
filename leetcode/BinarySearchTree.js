@@ -837,3 +837,56 @@ var mergeTrees = function (root1, root2) {
   newRoot.right = mergeTrees(root1?.right, root2?.right);
   return newRoot;
 };
+
+//! 563. Binary Tree Tilt
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+
+var findTilt = function (root) {
+  const sum = (node) => {
+    if (node == null) {
+      return 0;
+    }
+    return sum(node.left) + node.val + sum(node.right);
+  };
+
+  let result = 0;
+
+  const postOrder = (node) => {
+    if (node !== null) {
+      postOrder(node.left);
+      postOrder(node.right);
+
+      let leftSubTreeSum = sum(node.left);
+      let rightNodeValue = sum(node.right);
+      result += Math.abs(leftSubTreeSum - rightNodeValue);
+    }
+  };
+
+  postOrder(root);
+  return result;
+};
+
+var findTiltExplain = function (root) {
+  let tot = 0;
+
+  findSum(root);
+
+  return tot;
+
+  function findSum(node) {
+    // base case
+    if (node == null) return 0;
+
+    const left = findSum(node.left);
+    const right = findSum(node.right);
+
+    const sum = left + right;
+
+    tot += Math.abs(left - right);
+
+    return sum + node.val;
+  }
+};
