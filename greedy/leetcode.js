@@ -115,3 +115,38 @@ var findMinArrowShots = function (points) {
 
   return periods;
 };
+
+//! 406. Queue Reconstruction by Height
+
+/**
+ * @param {number[][]} people
+ * @return {number[][]}
+ */
+var reconstructQueue = function (people) {
+  people.sort((a, b) => a[0] - b[0]);
+
+  const reconstructArray = new Array(people.length).fill("");
+
+  for (let j = 0; j < people.length; j++) {
+    const human = people[j];
+    let greaterNumberCounter = 0;
+
+    for (let i = 0; i < reconstructArray.length; i++) {
+      const current = reconstructArray[i];
+      if (current === "") {
+        if (greaterNumberCounter === human[1]) {
+          reconstructArray[i] = human;
+          break;
+        } else {
+          greaterNumberCounter += 1;
+        }
+      } else {
+        if (current[0] >= human[0]) {
+          greaterNumberCounter += 1;
+        }
+      }
+    }
+  }
+
+  return reconstructArray;
+};
