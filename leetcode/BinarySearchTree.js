@@ -890,3 +890,72 @@ var findTiltExplain = function (root) {
     return sum + node.val;
   }
 };
+
+//! 199. Binary Tree Right Side View
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var rightSideView = function (root) {
+  if (root === null) {
+    return [];
+  }
+
+  const queue = [[root]];
+  const result = [];
+  while (queue.length) {
+    const level = queue.pop();
+    let newLevel = [];
+    for (let i = 0; i < level.length; i++) {
+      const node = level[i];
+      if (node.left) {
+        newLevel.push(node.left);
+      }
+
+      if (node.right) {
+        newLevel.push(node.right);
+      }
+    }
+
+    result.push(level[level.length - 1].val);
+    if (newLevel.length) {
+      queue.push(newLevel);
+    }
+  }
+  return result;
+};
+
+var rightSideView_explain = function (root) {
+  if (!root) {
+    return [];
+  }
+
+  const queue = [root];
+  const result = [];
+
+  while (queue.length) {
+    let len = queue.length;
+    result.push(queue[queue.length - 1].val);
+
+    while (len--) {
+      let node = queue.shift();
+      if (node.left) {
+        queue.push(node.left);
+      }
+
+      if (node.right) {
+        queue.push(node.right);
+      }
+    }
+  }
+
+  return result;
+};
