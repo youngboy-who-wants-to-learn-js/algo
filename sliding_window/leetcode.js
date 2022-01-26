@@ -80,38 +80,3 @@ var totalFruit = function (fruits) {
   }
   return maximumFruit;
 };
-
-/*
-var totalFruitExplain = function (fruits) {
-  let lastFruit = -1;
-  let secondLastFruit = -1;
-  let lastFruitCount = 0;
-  let currentMax = 0;
-  let max = 0;
-
-  for (let i = 0; i < fruits.length; i++) {
-    let fruit = fruits[i];
-
-    if (fruit === lastFruit || fruit === secondLastFruit) {
-      currentMax += 1;
-    } else {
-      currentMax = lastFruitCount + 1;
-    }
-
-    if (fruit === lastFruit) {
-      lastFruitCount += 1;
-    } else {
-      lastFruitCount = 1;
-    }
-
-    if (fruit !== lastFruit) {
-      secondLastFruit = lastFruit;
-      lastFruit = fruit;
-    }
-
-    max = Math.max(currentMax, max);
-  }
-
-  return max;
-};
-*/
