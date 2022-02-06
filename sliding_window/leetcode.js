@@ -80,3 +80,54 @@ var totalFruit = function (fruits) {
   }
   return maximumFruit;
 };
+
+//! 3. Longest Substring Without Repeating Characters
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function (s) {
+  let leftWindow = 0;
+  let map = {};
+  let result = 0;
+
+  for (let rightWindow = 0; rightWindow < s.length; rightWindow++) {
+    let letter = s[rightWindow];
+    if (map[letter] !== undefined) {
+      result = Math.max(result, rightWindow - leftWindow);
+      leftWindow = map[letter] + 1;
+      map = {};
+      for (let i = leftWindow; i <= rightWindow; i++) {
+        map[s[i]] = i;
+      }
+    } else {
+      map[letter] = rightWindow;
+    }
+  }
+
+  return Math.max(Object.keys(map).length, result);
+};
+
+const lengthOfLongestSubstring_explain = (s) => {
+  let leftWindow = 0;
+  let rightWindow = 0;
+  // let set = new Set();
+  let map = {};
+  let result = 0;
+
+  while (rightWindow < s.length) {
+    if (!map[s[rightWindow]]) {
+      // set.add(s[rightWindow]);
+      map[s[rightWindow]] = true;
+      rightWindow++;
+      result = Math.max(rightWindow - leftWindow, result);
+    } else {
+      // set.delete(s[leftWindow]);
+      delete map[s[leftWindow]];
+      leftWindow++;
+    }
+  }
+  return result;
+};
+
+console.log(lengthOfLongestSubstring_explain("pwwkew"));
