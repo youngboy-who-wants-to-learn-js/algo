@@ -2431,3 +2431,22 @@ const leastInterval = (tasks, n) => {
     (maximumRows - 1) * (n + 1) + lastRowLength.length
   );
 };
+
+//! 191. Number of 1 Bits
+
+/**
+ * @param {number} n - a positive integer
+ * @return {number}
+ */
+var hammingWeight = function (n) {
+  // return [...(n).toString(2)].filter((item) => item !== '0').length
+  let arr = n.toString(2);
+  let count = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== "0") {
+      count++;
+    }
+  }
+
+  return count;
+};
